@@ -11,6 +11,8 @@ builder.Services.AddControllers(options =>
 }).AddNewtonsoftJson()
 .AddXmlDataContractSerializerFormatters();
 
+
+builder.Services.AddProblemDetails();
 //builder.Services.AddProblemDetails(options =>
 //{
 //    options.CustomizeProblemDetails = ctx =>
@@ -30,7 +32,14 @@ builder.Services.AddSingleton<FileExtensionContentTypeProvider>();
 
 var app = builder.Build();
 
+
 // Configure the HTTP request pipeline.
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler();
+}
+
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
